@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.dscatalog.dto.UserDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
 import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.services.UserService;
 
@@ -42,41 +43,41 @@ public class UserResource {
 	 * 
 	 * @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 	 */
-	
+
 	@GetMapping
-	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable)
-	{		
-		
-		Page<UserDTO> p = service.findAllPaged(pageable); 
+	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+
+		Page<UserDTO> p = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(p);
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		UserDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
-		
-	UserDTO	newDto = service.insert(dto);
+
+		UserDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
-	} 
+	}
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid @RequestBody UserDTO dto) {
-		
-		dto = service.update(id,dto);
-		
-		return ResponseEntity.ok().body(dto);
-	} 
-	
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+
+		UserDTO Userdto = service.update(id, dto);
+
+		return ResponseEntity.ok().body(Userdto);
+	}
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<User> delete(@PathVariable Long id) {
-		
+
 		service.delete(id);
-		
+
 		return ResponseEntity.noContent().build();
-	} 
+	}
 }
