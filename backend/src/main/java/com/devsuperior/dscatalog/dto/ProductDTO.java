@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
@@ -18,6 +19,7 @@ public class ProductDTO implements Serializable {
 	private Long id;
 	
 	@NotBlank
+	@Size(min=5, max = 50, message="Deve conter entre 5 e 50 carcteres")
 	private String name;	
 	private String description;
 	@Positive
