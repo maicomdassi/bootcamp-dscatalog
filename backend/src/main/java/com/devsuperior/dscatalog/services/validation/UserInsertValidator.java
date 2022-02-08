@@ -16,7 +16,7 @@ import com.devsuperior.dscatalog.resources.excepitions.FieldMessage;
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
 	
 	@Autowired
-	UserRepository repository;
+	private UserRepository repository;
 	
 	@Override
 	public void initialize(UserInsertValid ann) {

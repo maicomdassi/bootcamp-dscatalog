@@ -1,0 +1,18 @@
+.catalog-container{
+font-size: 18px;
+}
+.catalog-tittle-conatiner h1{
+    font-size: 1em;
+    color: #263238;
+    letter-spacing: -0.015em;
+}
+
+.catalog-tittle-conatiner {
+    margin-bottom: 20px;
+}
+
+@media(min-width: 576px){
+    .catalog-container{
+        font-size: 25px;
+    }
+}
