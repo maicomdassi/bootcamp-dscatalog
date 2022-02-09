@@ -1,8 +1,9 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
  import { useForm } from 'react-hook-form'; 
-import { requestBackendLogin } from 'util/requests';
+import { requestBackendLogin, saveAuthData } from 'util/requests';
 import { useContext, useState } from 'react';
+
 
 /* import { AuthContext } from 'AuthContext';
 import { saveAuthData } from 'util/storage';
@@ -20,6 +21,7 @@ type LocationState = {
 }
 
 const Login = () => {
+ 
 
   const location = useLocation<LocationState>();
 
@@ -29,7 +31,7 @@ const Login = () => {
 
   const [hasError, setHasError] = useState(false);
 
-   const { register, handleSubmit/* , formState: {errors}  */} = useForm<FormData>(); 
+   const { register, handleSubmit, formState: {errors}  } = useForm<FormData>(); 
 
   const history = useHistory();
 
@@ -37,10 +39,14 @@ const Login = () => {
      
     requestBackendLogin(formData)
       .then(response => {
-        console.log('sucesso', response);        
+        saveAuthData(response.data);
+        console.log('sucesso', response);     
+        setHasError(false);   
+        history.push('/admin')
       })
       .catch((error) => {        
         console.log('ERRO', error);
+        setHasError(true);
       });
       /*     requestBackendLogin(formData)
       .then((response) => {
@@ -75,11 +81,11 @@ const Login = () => {
               }
             })} 
             type="text"
-            className= "form-control base-input"/*  {`form-control base-input ${errors.username ? 'is-invalid' : ''}`} */
+            className= {`form-control base-input ${errors.username ? 'is-invalid' : ''}`} 
             placeholder="Email"
             name="username"
           />
-          <div className="invalid-feedback d-block">{/* {errors.username?.message} */}</div>
+          <div className="invalid-feedback d-block">{ errors.username?.message} </div>
         </div>
         <div className="mb-2">
           <input
@@ -87,11 +93,11 @@ const Login = () => {
               required: 'Campo obrigatório'
             })} 
             type="password"
-            className="form-control base-input"/* {`form-control base-input ${errors.password ? 'is-invalid' : ''}`} */
+            className= {`form-control base-input ${errors.password ? 'is-invalid' : ''}`} 
             placeholder="Password"
             name="password"
           />
-          <div className="invalid-feedback d-block">{/* {errors.password?.message} */}</div>
+          <div className="invalid-feedback d-block">{errors.password?.message} </div>
         </div>
         <Link to="/admin/auth/recover" className="login-link-recover">
           Esqueci a senha
