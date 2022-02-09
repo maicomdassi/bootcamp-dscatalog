@@ -1,7 +1,7 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
  import { useForm } from 'react-hook-form'; 
-/* import { requestBackendLogin } from 'util/requests'; */
+import { requestBackendLogin } from 'util/requests';
 import { useContext, useState } from 'react';
 
 /* import { AuthContext } from 'AuthContext';
@@ -34,7 +34,14 @@ const Login = () => {
   const history = useHistory();
 
    const onSubmit = (formData: FormData) => {
-     console.log(formData) 
+     
+    requestBackendLogin(formData)
+      .then(response => {
+        console.log('sucesso', response);        
+      })
+      .catch((error) => {        
+        console.log('ERRO', error);
+      });
       /*     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
