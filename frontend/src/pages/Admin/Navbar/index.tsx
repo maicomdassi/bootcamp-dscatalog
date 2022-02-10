@@ -6,17 +6,17 @@ const Navbar = () => {
     <nav className="admin-nav-container">
       <ul>
         <li>
-          <NavLink to ="/admin/products" className='admin-nav-item'>
+          <NavLink to="/admin/products" className="admin-nav-item">
             <p>Produtos</p>
           </NavLink>
         </li>
         <li>
-          <NavLink to ="/admin/categories"className='admin-nav-item'>            
+          <NavLink to="/admin/categories" className="admin-nav-item">
             <p>Categorias</p>
           </NavLink>
         </li>
         <li>
-          <NavLink to ="/admin/users" className='admin-nav-item'>            
+          <NavLink to="/admin/users" className="admin-nav-item">
             <p>Usuários</p>
           </NavLink>
         </li>
