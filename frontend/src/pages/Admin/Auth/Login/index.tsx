@@ -1,10 +1,11 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-import { requestBackendLogin, saveAuthData } from 'util/requests';
-import { useState } from 'react';
+import { getTokenData, requestBackendLogin, saveAuthData } from 'util/requests';
+import { useContext, useState } from 'react';
 
 import './styles.css';
+import { AuthContext } from 'AuthContext';
 /* import { AuthContext } from 'AuthContext';
 import { saveAuthData } from 'util/storage';
 import { getTokenData } from 'util/auth'; */
@@ -21,6 +22,8 @@ type LocationState = {
 const Login = () => {
   const location = useLocation<LocationState>();
 
+  const { setAuthContextData } = useContext(AuthContext);
+
   const { from } = location.state || { from: { pathname: '/admin' } };
 
   /*  const { setAuthContextData } = useContext(AuthContext); */
@@ -36,32 +39,21 @@ const Login = () => {
   const history = useHistory();
 
   const onSubmit = (formData: FormData) => {
-    requestBackendLogin(formData)
-      .then((response) => {
-        saveAuthData(response.data);
-        console.log('sucesso', response);
-        setHasError(false);
-        history.push('/admin');
-       // history.replace(from);
-      })
-      .catch((error) => {
-        console.log('ERRO', error);
-        setHasError(true);
-      });
-    /*     requestBackendLogin(formData)
+
+         requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
         setHasError(false);
         setAuthContextData({
           authenticated: true,
-          tokenData: getTokenData(), */
-    /*      })
+          tokenData: getTokenData(), 
+         })
         history.replace(from);
       })
       .catch((error) => {
         setHasError(true);
         console.log('ERRO', error);
-      }); */
+      }); 
   };
 
   return (
