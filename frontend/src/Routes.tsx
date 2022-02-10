@@ -7,7 +7,6 @@ import ProductDetails from 'pages/ProductDatails';
 import { Router, Redirect, Route, Switch } from 'react-router-dom';
 import history from 'util/history';
 
-
 const Routes = () => (
   <Router history={history}>
     <Navbar />
