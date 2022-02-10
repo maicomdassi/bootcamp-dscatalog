@@ -25,3 +25,29 @@
     color: #FFF;
     font-weight: bold;
 }
+
+.nav-login{
+    display: none;
+}
+.nav-username{
+    display: none;
+}
+
+@media(min-width: 768px){
+    .nav-login{
+        display: unset;
+        color: #FFF;
+        margin-right: 20px;
+    }
+}
+@media(min-width: 992px){
+    .nav-login{
+        margin-right: 40px;
+    }
+    .nav-username{
+        display: unset;
+        margin-right: 20px;
+    }
+}
+
+
