@@ -8,6 +8,7 @@ import { BASE_URL } from 'util/requests';
 import ProductInfoLoader from './ProductInfoLoader';
 import ProductDatailsLoader from './ProductsDatailsLoader';
 import './styles.css';
+
 type UrlParms = {
   productId: string;
 };

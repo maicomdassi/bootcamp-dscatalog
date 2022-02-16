@@ -50,7 +50,8 @@ export const requestBackend = (config: AxiosRequestConfig) => {
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    //
+    console.log("interceptors.request.use");
+    console.log(config);
     return config;
   },
   function (error) {
@@ -62,6 +63,8 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axios.interceptors.response.use(
   function (response) {
+    console.log("interceptors.response.use");
+    console.log(response);
     return response;
   },
   function (error) {
