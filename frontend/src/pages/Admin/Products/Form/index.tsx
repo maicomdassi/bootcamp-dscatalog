@@ -15,6 +15,7 @@ const Form = () => {
   } = useForm<Product>();
 
   const onSubmit = (formData: Product) => {
+    
     const data = {
       ...formData,
       imgUrl:
@@ -34,8 +35,8 @@ const Form = () => {
       withCredentials: true,
     };
 
-    requestBackend(config).then((response) => {
-      console.log(response);
+    requestBackend(config).then(() => {
+      history.push('/admin/products');
     });
   };
 
