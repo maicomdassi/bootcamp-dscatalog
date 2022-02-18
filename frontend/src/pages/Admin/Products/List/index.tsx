@@ -8,29 +8,30 @@ import { requestBackend } from 'util/requests';
 import './styles.css';
 
 const List = () => {
-
   const [page, setPage] = useState<SpringPage<Product>>();
   //const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = () => {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: "/products",      
+      url: '/products',
       params: {
         page: 0,
         size: 50,
       },
     };
     //setLoading(true);
-    requestBackend(config)
-      .then((response) => {
-        setPage(response.data);
-      })
- 
-  }, []); 
+    requestBackend(config).then((response) => {
+      setPage(response.data);
+    });
+  };
 
   return (
-    <div className='product-crud-conatiner'>
+    <div className="product-crud-conatiner">
       <div className="product-crud-bar-container">
         <Link to={'/admin/products/create'}>
           <button className="btn btn-primary text-white btn-crud-add">
@@ -40,15 +41,13 @@ const List = () => {
 
         <div className="base-card product-filter-container">Seart Bar</div>
       </div>
-      <div className="row" >
-
-        {
-          page?.content.map(product =>(
-            <div key={product.id} className='col-sm-6 col-md-12'>
-            <ProductCrudCard product={product} />
-            </div> 
-          ))
-        }
+      <div className="row">
+        {page?.content.map((product) => (
+          <div key={product.id} className="col-sm-6 col-md-12">
+            <ProductCrudCard product={product}
+            onDelete={() => getProducts()} />
+          </div>
+        ))}
       </div>
     </div>
   );
