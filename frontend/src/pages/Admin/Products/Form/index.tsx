@@ -2,35 +2,38 @@ import { AxiosRequestConfig } from 'axios';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
+import Select from 'react-select';
 import { Product } from 'types/product';
 import { requestBackend } from 'util/requests';
 import './styles.css';
-
 
 type UrlParms = {
   productId: string;
 };
 
 const Form = () => {
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   const history = useHistory();
   const { productId } = useParams<UrlParms>();
- // const [product, setProduct] = useState<Product>();
+  // const [product, setProduct] = useState<Product>();
 
- const isEditing = productId !== 'create';
+  const isEditing = productId !== 'create';
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm<Product>();
 
-
   useEffect(() => {
-    if(isEditing){
-      requestBackend({ url: `/products/${productId}`})
-      .then((response) => {
-
+    if (isEditing) {
+      requestBackend({ url: `/products/${productId}` }).then((response) => {
         const product = response.data as Product;
 
         setValue('name', product.name);
@@ -40,20 +43,22 @@ const Form = () => {
         setValue('categories', product.categories);
       });
     }
-  }, [isEditing, productId, setValue])
+  }, [isEditing, productId, setValue]);
 
   const onSubmit = (formData: Product) => {
-    
     const data = {
       ...formData,
-      imgUrl: isEditing ? formData.imgUrl : 
-        'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/3-big.jpg',
-      categories: isEditing ? formData.categories : [
-        {
-          id: 1,
-          name: '',
-        },
-      ],
+      imgUrl: isEditing
+        ? formData.imgUrl
+        : 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/3-big.jpg',
+      categories: isEditing
+        ? formData.categories
+        : [
+            {
+              id: 1,
+              name: '',
+            },
+          ],
     };
 
     const config: AxiosRequestConfig = {
@@ -96,6 +101,15 @@ const Form = () => {
                   {errors.name?.message}{' '}
                 </div>
               </div>
+
+              <div className="margin-bottom-30">
+                <Select 
+                options={options} 
+                classNamePrefix="product-crud-select"
+                isMulti 
+                />
+              </div>
+
               <div className="margin-bottom-30">
                 <input
                   {...register('price', {

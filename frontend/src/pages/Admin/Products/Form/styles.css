@@ -19,11 +19,31 @@
   display: flex;
   justify-content: space-between;
 }
+
 .product-crud-buttons {
   height: 50px;
   border-radius: 10px;
   width: 110px;
   font-weight: bold;
+}
+.product-crud-select__control {
+  border-radius: 10px !important;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: #263238;
+  height: 50px;
+}
+
+.product-crud-select__placeholder {
+  color: #9E9E9E !important;
+}
+
+/* 
+  Para remover o traço vertical que fica ao lado da setinha
+ */
+  .product-crud-select__indicator-separator{
+  display: none;
+
 }
 @media (min-width: 576px) {
   .product-crud-buttons-conatiner {
@@ -38,7 +58,7 @@
   .product-crud-inputs-left-container {
     margin-bottom: 0;
   }
-  .product-crud-buttons { 
+  .product-crud-buttons {
     width: 270px;
   }
 }
