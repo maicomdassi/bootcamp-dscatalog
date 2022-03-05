@@ -13,16 +13,16 @@ const List = () => {
   //const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    getProducts();
+    getProducts(0);
   }, []);
 
-  const getProducts = () => {
+  const getProducts = ( pageNumber: number) => {
     const config: AxiosRequestConfig = {
       method: 'GET',
       url: '/products',
       params: {
-        page: 0,
-        size: 50,
+        page: pageNumber,
+        size: 4,
       },
     };
     //setLoading(true);
@@ -45,12 +45,12 @@ const List = () => {
       <div className="row">
         {page?.content.map((product) => (
           <div key={product.id} className="col-sm-6 col-md-12">
-            <ProductCrudCard product={product} onDelete={() => getProducts()} />
+            <ProductCrudCard product={product} onDelete={() => getProducts(page.number)} />
           </div>
         ))}
       </div>
 
-      <Pagination />
+      <Pagination pageCount={page ? page.totalPages : 0} range={3} onChange={getProducts} />
     </div>
   );
 };
