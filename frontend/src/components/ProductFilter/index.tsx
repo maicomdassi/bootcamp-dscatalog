@@ -6,12 +6,16 @@ import { Category } from 'types/category';
 import { requestBackend } from 'util/requests';
 import './styles.css';
 
-type ProductFilterData = {
+export type ProductFilterData = {
   name: string;
   category: Category | null;
 };
 
-const ProductFilter = () => {
+type Props = {
+  onSubmitFilter : (data: ProductFilterData) => void;
+}
+
+const ProductFilter = ({ onSubmitFilter } : Props) => {
   const [selectCategories, setSelectCategories] = useState<Category[]>([]);
   useEffect(() => {
     requestBackend({ url: '/categories' }).then((response) => {
@@ -23,7 +27,7 @@ const ProductFilter = () => {
     useForm<ProductFilterData>();
 
   const onSubmit = (formData: ProductFilterData) => {
-    console.log(formData);
+    onSubmitFilter(formData);
   };
 
   const handleFormClear = () => {
@@ -38,7 +42,7 @@ const ProductFilter = () => {
       name: getValues('name'),
       category: getValues('category')
     }
-    console.log('ENVIOU',obj);
+    onSubmitFilter(obj);
   }
 
   return (
