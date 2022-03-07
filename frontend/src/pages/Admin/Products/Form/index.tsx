@@ -7,6 +7,7 @@ import Select from 'react-select';
 import { Category } from 'types/category';
 import { Product } from 'types/product';
 import { requestBackend } from 'util/requests';
+import { toast } from 'react-toastify';
 import './styles.css';
 
 type UrlParms = {
@@ -55,8 +56,10 @@ const Form = () => {
   }, [isEditing, productId, setValue]);
 
   const onSubmit = (formData: Product) => {
-
-    const data = {...formData, price: String(formData.price).replace(',','.')}
+    const data = {
+      ...formData,
+      price: String(formData.price).replace(',', '.'),
+    };
 
     const config: AxiosRequestConfig = {
       method: isEditing ? 'PUT' : 'POST',
@@ -66,7 +69,11 @@ const Form = () => {
     };
 
     requestBackend(config).then(() => {
+      toast.info('Produto cadastrado com sucesso');
       history.push('/admin/products');
+    })
+    .catch(() => {
+      toast.error('Erro ao cadastar o produto');
     });
   };
 
@@ -145,7 +152,7 @@ const Form = () => {
                   {errors.price?.message}{' '}
                 </div>
               </div>
-      
+
               <div className="margin-bottom-30">
                 <input
                   {...register('imgUrl', {
