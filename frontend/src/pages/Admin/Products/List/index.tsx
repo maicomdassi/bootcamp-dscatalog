@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import Pagination from 'components/Pagination';
+import ProductFilter from 'components/ProductFilter';
 import ProductCrudCard from 'pages/Admin/Products/ProductCrudCard';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -35,14 +36,11 @@ const List = () => {
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  },[controlComponentsData]);
-
+  }, [controlComponentsData]);
 
   useEffect(() => {
-   getProducts();
+    getProducts();
   }, [getProducts]);
-
-
 
   return (
     <div className="product-crud-conatiner">
@@ -52,16 +50,13 @@ const List = () => {
             ADICIONAR
           </button>
         </Link>
-
-        <div className="base-card product-filter-container">Seart Bar</div>
+        <ProductFilter />
+        
       </div>
       <div className="row">
         {page?.content.map((product) => (
           <div key={product.id} className="col-sm-6 col-md-12">
-            <ProductCrudCard
-              product={product}
-              onDelete={() => getProducts()}
-            />
+            <ProductCrudCard product={product} onDelete={() => getProducts()} />
           </div>
         ))}
       </div>
